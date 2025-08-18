@@ -1,16 +1,23 @@
-let computerScore = 0;
-let humanScore = 0;
-let round = 1;
+function playGame() {
+    let computerScore = 0;
+    let humanScore = 0;
+    let round = 1;
 
-const humanChoice = getHumanChoice().toLowerCase();
-const computerChoice = getComputerChoice();
-
-console.log(humanChoice);
-console.log(computerChoice);
-
-playRound(humanChoice, computerChoice);
-
-console.log(`Human: ${humanScore} Computer: ${computerScore}`)
+    while (round <= 5) {
+        const computerChoice = getComputerChoice();
+        const humanChoice = getHumanChoice().toLowerCase();
+        console.log(`You: ${humanChoice}`);
+        console.log(`Computer: ${computerChoice}`);
+        let status = playRound(humanChoice, computerChoice);
+        if (status === "won") {
+            humanScore++
+        } else if (status === "lost") {
+            computerScore++
+        }
+        console.log(`Your score: ${humanScore} Computer score: ${computerScore}`);
+        round++;
+    }
+}
 
 function getComputerChoice() {
     let choice = Math.floor(Math.random() * 3) + 1;
@@ -33,17 +40,20 @@ function getHumanChoice() {
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === "rock" && computerChoice === "scissors") {
         console.log(`You won!!${humanChoice} beats ${computerChoice}`);
-        humanScore ++;
+        return "won";
     } else if (humanChoice === "paper" && computerChoice === "rock") {
         console.log(`You won!!${humanChoice} beats ${computerChoice}`);
-        humanScore ++;
+        return "won";
     } else if (humanChoice === "scissors" && computerChoice === "paper") {
         console.log(`You won!!${humanChoice} beats ${computerChoice}`);
-        humanScore ++;
+        return "won";
     } else if (humanChoice === computerChoice) {
         console.log(`Its a draw!! You both chose ${humanChoice} `);
     } else {
         console.log(`You lost... ${humanChoice} loses to ${computerChoice}`);
-        computerScore ++;
+        return "lost";
     }
 }
+
+playGame();
+
